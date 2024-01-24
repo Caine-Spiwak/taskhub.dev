@@ -3,7 +3,7 @@ const router = express.Router();
 import {
   createProject, deleteProject, getProjects, updateProject
 } from '../controllers/projectController.js';
-import { protect, admin } from '../middleware/authMIddleware.js'
+import { protect } from '../middleware/authMIddleware.js'
 
 
 // - /api/projects
