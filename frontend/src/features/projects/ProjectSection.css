@@ -1,0 +1,91 @@
+.project-section {
+	padding: 10px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.project-section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.new-project-input {
+	padding: 5px;
+	width: 100%;
+	border: none;
+}
+
+.add-project-btn {
+	cursor: pointer;
+}
+
+.project-list {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.project {
+	padding: 5px;
+	border-radius: 7px;
+	box-shadow: 0 0 7px 1px rgba(0, 0, 0, .2);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+.project:hover {
+	background: #eee;
+	box-shadow: none;
+}
+
+.edit-project-li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.edit-project-input {
+	width: 100%;
+	/* padding: 5px; */
+	border-radius: 7px;
+	box-shadow: 0 0 7px 1px rgba(0, 0, 0, .2);
+	outline: none;
+	border: none;
+	font-size: 1rem;
+	padding: 5px;
+}
+
+.project-btns {
+	display: flex;
+	gap: 5px;
+}
+
+.project-btn {
+	cursor: pointer;
+}
+
+.del-btn,
+.cancel-edit-btn {
+	color: red;
+	cursor: pointer;
+	margin-left: 5px;
+}
+
+.update-btn {
+	color: green;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+	background: #eee;
+	box-shadow: none;
+}
