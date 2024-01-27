@@ -1,0 +1,143 @@
+.task-section {
+  height: 100vh;
+  width: 40vw;
+  /* border: 1px solid black; */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Task Header */
+
+.task-section-header {
+  display: flex;
+}
+
+.new-task-input {
+  width: 26ch;
+  border: none;
+  text-align: center;
+  padding: 5px;
+}
+
+.task-header-hr {
+  width: 22ch;
+}
+
+/* Task List */
+
+.task-list {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task {
+  display: flex;
+  box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, .2);
+  border-radius: 7px;
+}
+
+.order {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  padding: 3px;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.order-number {
+  font-size: .8rem;
+  border-radius: 100%;
+}
+
+.task-content {
+  width: 100%;
+  padding: 0 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.task-control {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background: #eee;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around
+}
+
+.task-header {
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .task-name {
+  padding: 1px;
+} */
+
+.edit-task-name-input {
+  padding: inherit;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+.task-description {
+  background: #eee;
+  position: relative;
+  /* padding: 7px; */
+  padding-right: 25px;
+  border-radius: 7px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  font-size: .85rem;
+  line-height: 1rem;
+  height: auto;
+}
+
+.task-description-text {
+  padding: 10px;
+}
+
+.task-description-input {
+  background: #eee;
+  position: relative;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  width: 100%;
+  line-height: 1rem;
+  font-size: .85rem;
+  resize: none;
+  padding: 10px;
+}
+
+.edit-task-description-btn {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+}
+
+.del-task-btn {
+  cursor: pointer;
+}
+
+.task-icon {
+  width: 13px;
+  height: auto;
+}

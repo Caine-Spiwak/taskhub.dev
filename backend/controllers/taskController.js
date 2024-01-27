@@ -32,7 +32,8 @@ const getTasks = asyncHandler(async (req, res) => {
   const tasks = await Task.find({projectId: req.params.id})
 
   if (tasks) {
-    res.status(200).json(tasks)
+    const sortedTasks = tasks.sort((a, b) => a.order - b.order) 
+    res.status(200).json(sortedTasks)
   } else {
     res.status(404)
     throw new Error('Tasks Not Found')
@@ -43,20 +44,27 @@ const getTasks = asyncHandler(async (req, res) => {
 // @route   PUT /api/tasks
 // @access  Private
 const updateTask = asyncHandler(async (req, res) => {
-  const task = await Task.findById(req.body.taskId)
 
-  if (task) {
-    task.name = req.body.name || task.name
-    task.desc = req.body.desc || task.desc
+  const taskId = req.body.taskId;
+  const order = Number(req.body.order);
 
-    await task.save()
+  const {name, desc} = req.body
 
-    res.status(200).json(task)
+  const updatedTask = await Task.findOneAndUpdate(
+    { _id: taskId },
+    { $set: { order, name, desc } },
+    { new: true }
+  );
+
+  if (updatedTask) {
+    res.status(200).json(updatedTask);
   } else {
     res.status(404)
-    throw new Error('Task Not Found')
+    throw new Error('Task not found or not updated properly');
   }
 })
+
+
 
 // @desc    Delete a Task
 // @route   DELETE /api/tasks

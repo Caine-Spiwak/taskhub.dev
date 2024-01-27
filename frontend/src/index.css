@@ -49,10 +49,3 @@ a {
   align-items: center;
   justify-content: center;
 }
-
-/* Footer */
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

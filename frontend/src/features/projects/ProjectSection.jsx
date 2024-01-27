@@ -33,7 +33,6 @@ const ProjectSection = () => {
 		}
   }, [dispatch, projects])
 
-	console.log(projects)
 
 
   if ( isLoading ) return <p>Loading</p>
