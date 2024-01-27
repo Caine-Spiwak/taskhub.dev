@@ -6,9 +6,9 @@ import { useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation, useDele
 import { useCreateTodoMutation, useUpdateTodoMutation } from '../../slices/todosApiSlice'
 // import TodoSection from '../../todos/components/TodoSection';
 import { useState, useEffect } from 'react';
-// import TaskDescription from './TaskDescription';
-// import TaskDescriptionEdit from './TaskDescriptionEdit';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import TaskDescription from '../../features/tasks/components/TaskDescription'
+import TaskDescriptionEdit from '../../features/tasks/components/TaskDescriptionEdit'
 
 
 const TaskSection = () => {
@@ -18,7 +18,7 @@ const TaskSection = () => {
   const [newTaskName, setNewTaskName] = useState('')
   const [editTaskName, setEditTaskName] = useState('')
   const [editTaskNameId, setEditTaskNameId] = useState('')
-  // const [editDescId, setEditDescId] = useState('')
+  const [editDescId, setEditDescId] = useState('')
 
   // Query & Mutations 
   const { data: taskData, isLoading, error } = useGetTasksQuery(activeProjectId)
@@ -49,10 +49,10 @@ const TaskSection = () => {
 
   const handleEditTaskName = async () => {
     const data = {
-      projectId: activeProjectId,
       taskId: editTaskNameId,
       name: editTaskName
     }
+    console.log(data)
     await updateTask(data)
     setEditTaskNameId('')
     setEditTaskName('')
@@ -211,13 +211,12 @@ const TaskSection = () => {
                             defaultValue={task.name}
                             onChange={(e) => setEditTaskName(e.target.value)}
                             onKeyDown={(e) => {if (e.key === 'Enter') handleEditTaskName()}}
-                            onBlur={() => setEditTaskNameId('')}
                             autoFocus
                           >
                           </input>
                         </div>
                       )}
-                      {/* {task._id !== editDescId ? (
+                      {task._id !== editDescId ? (
                         <TaskDescription 
                           task={task} 
                           setEditDescId={setEditDescId}
@@ -228,7 +227,7 @@ const TaskSection = () => {
                           editDescId={editDescId}
                           setEditDescId={setEditDescId}
                         />
-                      )} */}
+                      )}
                       {/* <TodoSection task={task} taskId={task._id}/> */}
                     </div>
                     <div className='task-control'>

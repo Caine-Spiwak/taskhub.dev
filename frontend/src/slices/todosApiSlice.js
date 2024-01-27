@@ -4,8 +4,8 @@ const TODOS_URL = '/api/todos'
 export const tasksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
 		getTodos: builder.query({
-			query: ({ activeProjectId, taskId }) => ({
-				url: `${TODOS_URL}/${activeProjectId}/${taskId}`,
+			query: ({ taskId }) => ({
+				url: `${TODOS_URL}/${taskId}`,
 			}),
 			providesTags: ['Todos']
 		}),

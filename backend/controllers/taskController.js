@@ -6,7 +6,7 @@ import Task from '../models/taskModel.js'
 // @route   POST /api/tasks
 // @access  Private
 const createTask = asyncHandler(async (req, res) => {
-  const {projectId, name} = req.body
+  const {projectId, name, order} = req.body
 
   if(!req.body.projectId) {
 		res.status(400)
@@ -20,6 +20,7 @@ const createTask = asyncHandler(async (req, res) => {
   const task = await Task.create({
     projectId,
     name,
+    order
   })
 
 	res.status(200).json(task)
@@ -44,25 +45,48 @@ const getTasks = asyncHandler(async (req, res) => {
 // @route   PUT /api/tasks
 // @access  Private
 const updateTask = asyncHandler(async (req, res) => {
-
   const taskId = req.body.taskId;
   const order = Number(req.body.order);
+  const { name, desc } = req.body;
 
-  const {name, desc} = req.body
-
-  const updatedTask = await Task.findOneAndUpdate(
-    { _id: taskId },
-    { $set: { order, name, desc } },
-    { new: true }
-  );
-
-  if (updatedTask) {
-    res.status(200).json(updatedTask);
-  } else {
-    res.status(404)
-    throw new Error('Task not found or not updated properly');
+  // Build an update object with only the provided fields
+  const updateObject = {};
+  if (typeof name !== 'undefined') {
+    updateObject.name = name;
   }
-})
+  if (typeof desc !== 'undefined') {
+    updateObject.desc = desc;
+  }
+  if (!isNaN(order)) {
+    updateObject.order = order;
+  }
+
+  // Perform the update only if there are fields to update
+  if (Object.keys(updateObject).length > 0) {
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: taskId },
+      { $set: updateObject },
+      { new: true }
+    );
+
+    if (updatedTask) {
+      res.status(200).json(updatedTask);
+    } else {
+      res.status(404);
+      throw new Error('Task not found or not updated properly');
+    }
+  } else {
+    // No fields to update, respond with the current task
+    const currentTask = await Task.findById(taskId);
+    if (currentTask) {
+      res.status(200).json(currentTask);
+    } else {
+      res.status(404);
+      throw new Error('Task not found');
+    }
+  }
+});
+
 
 
 
