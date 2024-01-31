@@ -1,6 +1,7 @@
 import './Dashboard.css'
 import ProjectSection from '../features/projects/ProjectSection'
-import TaskSection from '../features/tasks/TaskSection'
+// import TaskSection from '../features/tasks/TaskSection'
+import NewTaskSection from '../features/new-task-section/NewTaskSection'
 // import { Link } from 'react-router-dom';
 
 
@@ -16,7 +17,7 @@ const Dashboard = () => {
         </div>
       </div>  
       <div className="content">
-        <TaskSection />
+        <NewTaskSection />
       </div>
     </div>
   )
