@@ -1,7 +1,7 @@
 import { apiSlice } from "./apiSlice";
 const TODOS_URL = '/api/todos'
 
-export const tasksApiSlice = apiSlice.injectEndpoints({
+export const todosApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
 		getTodos: builder.query({
 			query: ({ taskId }) => ({
@@ -41,4 +41,4 @@ export const {
   useCreateTodoMutation,
   useDeleteTodoMutation,
   useUpdateTodoMutation
-} = tasksApiSlice
+} = todosApiSlice

@@ -14,13 +14,13 @@ const createTask = asyncHandler(async (req, res) => {
 	}
   if(!req.body.name) {
 		res.status(400)
-		throw new Error('Please provide name field')
+		throw new Error('Please Provide name field')
 	}
 
   const task = await Task.create({
     projectId,
     name,
-    order
+    order,
   })
 
 	res.status(200).json(task)
@@ -87,9 +87,6 @@ const updateTask = asyncHandler(async (req, res) => {
   }
 });
 
-
-
-
 // @desc    Delete a Task
 // @route   DELETE /api/tasks
 // @access  Private
@@ -103,9 +100,6 @@ const deleteTask = asyncHandler(async (req, res) => {
     throw new Error('Task Not Found')
   }
 })
-
-
-
 
 export {
   createTask,
