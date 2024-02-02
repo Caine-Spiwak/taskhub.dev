@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useUpdateTaskMutation } from "../../slices/tasksApiSlice"
+import { useUpdateTaskMutation } from "../../../slices/tasksApiSlice"
 
 const TaskHeader = ({task}) => {
   // MUTATIONS

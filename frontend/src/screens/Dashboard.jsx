@@ -1,12 +1,8 @@
 import './Dashboard.css'
 import ProjectSection from '../features/projects/ProjectSection'
-// import TaskSection from '../features/tasks/TaskSection'
-import NewTaskSection from '../features/new-task-section/NewTaskSection'
-// import { Link } from 'react-router-dom';
-
+import TaskSection from '../features/tasks/TaskSection'
 
 const Dashboard = () => {
-
   return (
     <div className="window">
       <div className="sidebar">
@@ -17,7 +13,7 @@ const Dashboard = () => {
         </div>
       </div>  
       <div className="content">
-        <NewTaskSection />
+        <TaskSection />
       </div>
     </div>
   )

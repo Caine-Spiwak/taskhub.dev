@@ -1,34 +1,25 @@
 import './TaskSection.css'
-import { IoIosAdd } from "react-icons/io";
-import { AiOutlineDelete } from "react-icons/ai";
-import { useSelector } from "react-redux"
-import { useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation } from "../../slices/tasksApiSlice"
-import { useCreateTodoMutation, useUpdateTodoMutation } from '../../slices/todosApiSlice'
-// import TodoSection from '../../todos/components/TodoSection';
-import { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import TaskDescription from '../../features/tasks/components/TaskDescription'
-import TaskDescriptionEdit from '../../features/tasks/components/TaskDescriptionEdit'
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useCreateTaskMutation, useGetTasksQuery, useUpdateTaskMutation } from '../../slices/tasksApiSlice'
+import NewTask from './components/Task';
 
-
-const TaskSection = () => {
+const NewTaskSection = () => {
+  // GLOBAL STATE
   const { activeProjectId } = useSelector((state) => state.activeProject)
-  // State
-  const [tasks, setTasks] = useState([])
-  const [newTaskName, setNewTaskName] = useState('')
-  const [editTaskName, setEditTaskName] = useState('')
-  const [editTaskNameId, setEditTaskNameId] = useState('')
-  const [editDescId, setEditDescId] = useState('')
-
-  // Query & Mutations 
+  
+  // QUERY & MUTATIONS
   const { data: taskData, isLoading, error } = useGetTasksQuery(activeProjectId)
   const [ createTask ] = useCreateTaskMutation()
   const [ updateTask ] = useUpdateTaskMutation()
-  const [ deleteTask ] = useDeleteTaskMutation()
-  const [ createTodo ] = useCreateTodoMutation()
-  const [ updateTodo ] = useUpdateTodoMutation()
-	
-  // API Call Functions
+
+  // COMPONENT STATE
+  const [tasks, setTasks] = useState([])
+  const [newTaskName, setNewTaskName] = useState('')
+
+  // API CALL FUNCTIONS
   const handleCreateTask = async () => {
     await createTask({ 
       projectId: activeProjectId, 
@@ -38,221 +29,64 @@ const TaskSection = () => {
     setNewTaskName('')
   }
 
-  const handleCreateTodo = async (taskId) => {
-    const length = tasks.find(task => task._id === taskId).todos.length
-    await createTodo({ 
-      projectId: activeProjectId, 
-      taskId: taskId,
-      order: length,
-    })
-  }
-
-  const handleEditTaskName = async () => {
-    const data = {
-      taskId: editTaskNameId,
-      name: editTaskName
-    }
-    console.log(data)
-    await updateTask(data)
-    setEditTaskNameId('')
-    setEditTaskName('')
-  }
-
-  const handleDeleteTask = async (taskId) => {
-    const updatedTasks = [...tasks]
-
-    const filteredTasks = updatedTasks.filter(task => task._id !== taskId)
-
-    const data = {
-      projectId: activeProjectId,
-      taskId: taskId,
-    }
-    await deleteTask(data)
-
-    // Update the order of the remaining tasks
-    const updatedOrderTasks = filteredTasks.map(async (task, index) => {
-      await updateTask({
-        projectId: activeProjectId,
-        taskId: task._id,
-        order: index,
+  const handleDragEnd = async (event) => {
+    const { active, over } = event;
+  
+    if (active.id !== over.id) {
+      setTasks((items) => {
+        const activeIndex = items.findIndex((task) => task._id === active.id);
+        const overIndex = items.findIndex((task) => task._id === over.id);
+        const updatedItems = arrayMove(items, activeIndex, overIndex);
+        
+        // Update order property on server
+        updatedItems.map(async (task, index) => {
+          await updateTask({
+            taskId: task._id,
+            order: index
+          })
+        })
+        return updatedItems;
       });
-      return { ...task, order: index }; // Return the updated task with correct order
-    });
-
-    // Wait for all updateTask promises to complete
-    await Promise.all(updatedOrderTasks);
-  }
-
-  const handleDragEnd = async (result) => {
-    const { source, destination, type } = result;
-  
-    if (result.source.droppableId !== result.destination.droppableId) return;
-  
-    // Update Task Order Locally 
-    if (type === 'tasks') {
-      const updatedTasks = [...tasks];
-      const [draggedTask] = updatedTasks.splice(source.index, 1);
-      updatedTasks.splice(destination.index, 0, draggedTask);
-  
-      console.log('Updated Tasks Locally:', updatedTasks);
-  
-      setTasks(updatedTasks);
-  
-      // Update on Server
-      const updateTasksOnServer = async () => {
-        const updatedTasksOnServer = updatedTasks.map(async (task, index) => {
-          console.log(`Updating task ${task._id} (order: ${index})`);
-  
-          try {
-            const response = await updateTask({
-              taskId: task._id,
-              order: index,
-            });
-  
-            console.log(`Task ${task._id} updated successfully. Response:`, response);
-  
-            return { ...task, order: index };
-          } catch (error) {
-            console.error(`Error updating task ${task._id}:`, error);
-            throw error; // Re-throw the error to stop Promise.all if one request fails
-          }
-        });
-  
-        // Wait for all updateTask promises to complete
-        await Promise.all(updatedTasksOnServer);
-      };
-  
-      console.log('Updating tasks on the server...');
-      await updateTasksOnServer();
-      console.log('Tasks updated on the server.');
     }
-  
-    // ... (additional logic for handling todos)
-    // if (type === 'todos') {
-    //   const todos = tasks.find(task => task._id === result.source.droppableId).todos
-    //   const updatedTodos = JSON.parse(JSON.stringify(todos.slice().sort((a, b) => a.order - b.order)))
-    //   await updateTodo({
-    //     projectId: activeProjectId,
-    //     taskId: result.source.droppableId,
-    //     todoId: updatedTodos[sourceIndex]._id,
-    //     order: destinationIndex
-    //   })
-    //   await updateTodo({
-    //     projectId: activeProjectId,
-    //     taskId: result.source.droppableId,
-    //     todoId: updatedTodos[destinationIndex]._id,
-    //     order: sourceIndex
-    //   })
-    // }
   }
 
-
-  // useEffect 
+  // USE-EFFECT
   useEffect(() => {
     if (taskData) {
       setTasks(taskData)
     }
-  },[taskData])
+  }, [taskData])
 
   if ( isLoading ) return <p>Loading</p>
   if ( error ) return <div>{ error?.data?.message || error.error }</div>
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-    <div className="task-section">
-      <div className="task-section-header">
-        <input
-          className='new-task-input'
-          placeholder="New Task Name"
-          value={newTaskName}
-          onChange={(e) => setNewTaskName(e.target.value)}
-          onKeyDown={(e) => {if (e.key === 'Enter') handleCreateTask()}}
-          onBlur={() => setNewTaskName('')}
-        >
-        </input>
-      </div>
-      <hr className='task-header-hr'></hr>
-      <Droppable droppableId="task-list" type='tasks'>
-        {(provided) => (
-          <ul 
-            className="task-list"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <div className="task-section">
+        <div className='task-section-header'>
+          <input
+            className='new-task-input'
+            placeholder="New Task Name"
+            value={newTaskName}
+            onChange={(e) => setNewTaskName(e.target.value)}
+            onKeyDown={(e) => {if (e.key === 'Enter') handleCreateTask()}}
+            onBlur={() => setNewTaskName('')}
           >
-            {tasks.length < 1 && <p>No Tasks</p>}
-            {tasks.map((task, index) => (
-              <Draggable key={task._id} draggableId={task._id} index={index}>
-                {(provided) => (
-                  <li 
-                    className='task'
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <div className='order'>
-                      <div className='order-number'>{index + 1}</div>
-                    </div>
-                    <div className='task-content'>
-                      {task._id !== editTaskNameId ? (
-                        <div 
-                          className='task-header'
-                        >
-                          <div 
-                            className='task-name'
-                            onDoubleClick={() => setEditTaskNameId(task._id)}
-                          >
-                            {task.name}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="task-header">
-                          <input
-                            className='edit-task-name-input'
-                            defaultValue={task.name}
-                            onChange={(e) => setEditTaskName(e.target.value)}
-                            onKeyDown={(e) => {if (e.key === 'Enter') handleEditTaskName()}}
-                            autoFocus
-                          >
-                          </input>
-                        </div>
-                      )}
-                      {task._id !== editDescId ? (
-                        <TaskDescription 
-                          task={task} 
-                          setEditDescId={setEditDescId}
-                        />
-                      ) : (
-                        <TaskDescriptionEdit 
-                          task={task}
-                          editDescId={editDescId}
-                          setEditDescId={setEditDescId}
-                        />
-                      )}
-                      {/* <TodoSection task={task} taskId={task._id}/> */}
-                    </div>
-                    <div className='task-control'>
-                      <AiOutlineDelete
-                        className='del-task-btn'
-                        onClick={() => handleDeleteTask(task._id)}
-                      >
-                      </AiOutlineDelete>
-                      <IoIosAdd
-                        className='add-todo-btn'
-                        onClick={() => handleCreateTodo(task._id)}
-                      >
-                      </IoIosAdd>
-                    </div>
-                  </li>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
+          </input>
+        </div>
+        <hr className='task-header-hr'></hr>
+        {tasks.length < 1 && <p>No Tasks</p>}
+        <SortableContext
+          items={tasks.map(task => task._id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul className="task-list">
+            {tasks.map((task, index) => <NewTask key={task._id} id={task._id} task={task} index={index} tasks={tasks}/>)}
           </ul>
-        )}
-      </Droppable>
-    </div>
-    </DragDropContext>
-  )
+        </SortableContext>
+      </div>
+    </DndContext>
+  );
 }
 
-export default TaskSection;
+export default NewTaskSection

@@ -2,10 +2,10 @@ import { IoIosAdd } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-import { useCreateTodoMutation } from "../../slices/todosApiSlice";
-import { useDeleteTaskMutation, useUpdateTaskMutation } from "../../slices/tasksApiSlice";
-import TaskDescription from "../tasks/components/TaskDescription";
-import TodoSection from '../todos/TodoSection'
+import { useCreateTodoMutation } from "../../../slices/todosApiSlice";
+import { useDeleteTaskMutation, useUpdateTaskMutation } from "../../../slices/tasksApiSlice";
+import TaskDescription from "./TaskDescription";
+import TodoSection from '../../todos/TodoSection'
 import TaskHeader from "./TaskHeader";
 
 const NewTask = (props) => {
