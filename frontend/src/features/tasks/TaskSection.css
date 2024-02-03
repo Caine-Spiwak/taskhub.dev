@@ -42,18 +42,27 @@
 }
 
 .order {
+  position: relative;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
-  padding: 3px;
+  /* padding: 1px; */
   background: #eee;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.order-number {
-  font-size: .8rem;
+/* .order-number {
+  font-size: .7rem;
   border-radius: 100%;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+} */
+
+.handle {
+  display: flex;
+  cursor: grab;
 }
 
 .task-content {
@@ -63,16 +72,6 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
-}
-
-.task-control {
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
-  background: #eee;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around
 }
 
 .task-header {
@@ -133,11 +132,27 @@
   cursor: pointer;
 }
 
+.task-control {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background: #eee;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
 .del-task-btn {
   cursor: pointer;
 }
 
-.task-icon {
-  width: 13px;
+/* .add-todo-btn {
+  position: absolute;
+  top: 10px;
+  cursor: pointer;
+} */
+
+/* .task-icon {
+  width: 10px;
   height: auto;
-}
+} */

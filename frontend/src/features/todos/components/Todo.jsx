@@ -1,4 +1,5 @@
 import { AiOutlineDelete } from "react-icons/ai";
+import { MdOutlineDragHandle } from "react-icons/md";
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import { useState } from "react";
@@ -67,8 +68,8 @@ const Todo = (props) => {
       {...attributes}
       style={style}
     >
-      <div className="todo-order" {...listeners}>{props.index + 1}</div>
-      <hr></hr>
+      <div className="todo-order" >{props.index + 1}</div>
+      <MdOutlineDragHandle className="handle" {...listeners}/>
       {props.todo._id !== editTodoId ? (
         <div 
           className="todo-section"

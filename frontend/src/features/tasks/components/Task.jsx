@@ -7,6 +7,8 @@ import { useDeleteTaskMutation, useUpdateTaskMutation } from "../../../slices/ta
 import TaskDescription from "./TaskDescription";
 import TodoSection from '../../todos/TodoSection'
 import TaskHeader from "./TaskHeader";
+import { RiDraggable } from "react-icons/ri";
+
 
 const NewTask = (props) => {
   // DND-KIT
@@ -65,25 +67,27 @@ const NewTask = (props) => {
         {...attributes}
         style={style}
       >
-        <div className='order' {...listeners}>
-          <div className='order-number'>{props.index + 1}</div>
+        <div className='order'>
+          {/* <div className='order-number'>{props.index + 1}</div> */}
+          <div className="handle" {...listeners}><RiDraggable /></div>
         </div>
         <div className='task-content'>
           <TaskHeader task={props.task} />
-          <TaskDescription task={props.task}/>
+          {/* <TaskDescription task={props.task}/> */}
           <TodoSection taskId={props.task._id}/>
         </div>
         <div className='task-control'>
-          <AiOutlineDelete
-            className='del-task-btn'
-            onClick={() => handleDeleteTask(props.task._id)}
-          >
-          </AiOutlineDelete>
           <IoIosAdd
             className='add-todo-btn'
             onClick={() => handleCreateTodo(props.task._id)}
           >
           </IoIosAdd>
+          <hr></hr>
+          <AiOutlineDelete
+            className='del-task-btn'
+            onClick={() => handleDeleteTask(props.task._id)}
+          >
+          </AiOutlineDelete>
         </div>
       </li>
     </>
