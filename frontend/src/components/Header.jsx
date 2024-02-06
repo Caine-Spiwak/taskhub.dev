@@ -31,7 +31,7 @@ const Header = () => {
 				<div className="nav-sections">
 					<div className="logo-section">
 						<Link to='/'>
-							<div>BULLSEYE</div>
+							<div>TaskHub</div>
 						</Link>
 					</div>
 					{ userInfo ? (
@@ -46,8 +46,8 @@ const Header = () => {
 					) : (
 								
 							<div className="ctas">
-								<Link to="/signin">Sign In</Link>
-								<Link to="/signup">Sign Up</Link>
+								<Link to="/signin"><button className="signin-btn">Sign In</button></Link>
+								<Link to="/signup"><button className="signup-btn">Get Started</button></Link>
 							</div>
 					)}
 				</div>

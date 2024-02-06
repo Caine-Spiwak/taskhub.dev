@@ -1,6 +1,6 @@
 .window {
 	display: grid;
-  grid-template-columns: minmax(250px, 15vw) 85vw;
+  grid-template-columns: minmax(250px, 15vw) minmax(250px, 85vw);
 }
 
 .sidebar {
