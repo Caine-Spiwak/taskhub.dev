@@ -53,12 +53,16 @@ const NewTaskSection = () => {
   // USE-EFFECT
   useEffect(() => {
     if (taskData) {
-      setTasks(taskData)
+      setTasks(taskData);
     }
-  }, [taskData])
+  }, [taskData]);
+  
 
   if ( isLoading ) return <p>Loading</p>
   if ( error ) return <div>{ error?.data?.message || error.error }</div>
+
+  console.log("task Data:", taskData)
+  console.log(tasks)
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -75,15 +79,16 @@ const NewTaskSection = () => {
           </input>
         </div>
         <hr className='task-header-hr'></hr>
-        {tasks.length < 1 && <p>No Tasks</p>}
-        <SortableContext
-          items={tasks.map(task => task._id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <ul className="task-list">
-            {tasks.map((task, index) => <NewTask key={task._id} id={task._id} task={task} index={index} tasks={tasks}/>)}
-          </ul>
-        </SortableContext>
+        {tasks.length < 1 ? (<p>No Tasks</p>) : (
+          <SortableContext
+            items={tasks.map(task => task._id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <ul className="task-list">
+              {tasks.map((task, index) => <NewTask key={task._id} id={task._id} task={task} index={index} tasks={tasks}/>)}
+            </ul>
+          </SortableContext>
+        )}
       </div>
     </DndContext>
   );

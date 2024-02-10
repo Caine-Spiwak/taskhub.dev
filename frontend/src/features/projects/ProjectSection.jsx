@@ -28,7 +28,7 @@ const ProjectSection = () => {
 
   // USE EFFECT
   useEffect(() => {
-		if (projects) {
+		if (projects && projects.length > 0) {
 			dispatch(defaultActiveProject(projects))
 		}
   }, [dispatch, projects])

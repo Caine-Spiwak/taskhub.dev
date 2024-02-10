@@ -30,14 +30,18 @@ const createTask = asyncHandler(async (req, res) => {
 // @route   GET /api/tasks/:id
 // @access  Private
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find({projectId: req.params.id})
-
-  if (tasks) {
-    const sortedTasks = tasks.sort((a, b) => a.order - b.order) 
-    res.status(200).json(sortedTasks)
+  if (req.params.id === 'null') {
+    res.status(200).json([])
   } else {
-    res.status(404)
-    throw new Error('Tasks Not Found')
+    const tasks = await Task.find({projectId: req.params.id})
+
+    if (tasks) {
+      const sortedTasks = tasks.sort((a, b) => a.order - b.order) 
+      res.status(200).json(sortedTasks)
+    } else {
+      res.status(404)
+      throw new Error('Tasks Not Found')
+    }
   }
 })
 

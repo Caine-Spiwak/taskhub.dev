@@ -6,6 +6,7 @@ import { setCredentials } from "../slices/authSlice"
 import { useUpdateUserMutation, useLogoutMutation } from '../slices/usersApiSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../slices/authSlice'
+import { removeActiveProject } from '../slices/activeProjectSlice'
 
 
 
@@ -15,6 +16,7 @@ const ProfileScreen = () => {
 
 	// GLOBAL STATE
 	const { userInfo } = useSelector((state) => state.auth)
+	// const { activeProject } = useSelector((state) => state.activeProject)
 
 	// State
   const [firstName, setFirstName] = useState('')
@@ -33,6 +35,7 @@ const ProfileScreen = () => {
 		try {
 			await logoutApiCall().unwrap()
 			dispatch(logout())
+			dispatch(removeActiveProject())
 			navigate('/')
 		} catch (error) {
 			console.log(error)
