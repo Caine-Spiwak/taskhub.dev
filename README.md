@@ -29,3 +29,19 @@ Navigate to www.taskhub.dev
 + Create a Todo clicking on the "+" icon 
 + Edit a Todo name by double clicking on it
 + Delete a Todo by clicking on trash icon when hovering
+
+## Run Code and/or Contribute
+clone the repository
+```bash
+git clone https://github.com/Caine-Spiwak/taskhub.dev.git
+```
+install dependencies for front & backend
+```bash
+npm run build
+```
+run the server
+```bash
+npm run start
+```
+Go to http://localhost:5555
+
