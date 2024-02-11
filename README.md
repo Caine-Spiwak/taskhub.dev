@@ -26,7 +26,7 @@ Navigate to www.taskhub.dev
 + Delete a Task by clicking on trash icon when hovering
 #### Todos
 + Simply re-order your todo list via drag n' drop
-+ Create a Todo clicking on the "+" icon 
++ Create a Todo by clicking on the "+" icon 
 + Edit a Todo name by double clicking on it
 + Delete a Todo by clicking on trash icon when hovering
 
