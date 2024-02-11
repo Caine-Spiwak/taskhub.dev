@@ -11,8 +11,10 @@ With TaskHub you can manage many projects. Those projects will have their own ta
 
 ## QuickStart
 Navigate to www.taskhub.dev
-+ Start with a blank slate & create a dummy account
-  - or.. sign in with username: portfolio | password: portfolio
+* Start with a blank slate & create a dummy account
+  
+  or
+* Sign in with username: portfolio | password: portfolio
 
 ## Usage
 #### Projects
