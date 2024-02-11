@@ -41,7 +41,7 @@ npm run build
 ```
 run the server
 ```bash
-npm run start
+npm run dev
 ```
 Go to http://localhost:5555
 
