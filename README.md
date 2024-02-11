@@ -47,3 +47,11 @@ npm run dev
 ```
 Go to http://localhost:5555
 
+## Upcoming Features
+So far only the most fundamental part of app idea is implemented. Here's whats in store...
++ Maintence Tasks Feature. Maintenece tasks will show up in their own section. These are tasks thats are re-occuring.
++ Events Feature. Events will show up in their own section. Events have one instance.
++ The ability to schedule a task or todo as a Maintence Task or Event
++ View upcoming Events by day, week, month, etc..
++ Much more...
+
