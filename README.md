@@ -2,6 +2,7 @@
 A life management app inspired by Tony Robbins RPM framework. Organize your goals by project, each project having organizable tasks, and each task having organizable todos.
 
 ## Why was TaskHub created?
++ ⭐️ Creating a project that I'd love to use myself!
 + Sometimes the standard todo list isn't enough.
 + Which task should you be working on with your limited time?
 + How can you tell at a glance, which todo brings you closer to accomplishing which goal?
