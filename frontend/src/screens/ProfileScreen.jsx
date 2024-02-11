@@ -50,7 +50,8 @@ const ProfileScreen = () => {
 			try {
 				const res = await updateProfile({
 					_id: userInfo._id,
-					name,
+					fName: firstName,
+					lName: lastName,
 					email,
 					password
 				}).unwrap()

@@ -66,4 +66,17 @@ footer {
   justify-content: center;
 }
 
+/* Banner */
+.ban-container {
+  width: 100%;
+  display: flex;
+}
 
+.banner {
+  display: flex;
+  gap: 12px;
+  background: rgb(53, 53, 53);
+  color: white;
+  justify-content: center;
+  padding: 3px 0px;
+}

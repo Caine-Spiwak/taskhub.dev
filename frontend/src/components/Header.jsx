@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useLogoutMutation } from "../slices/usersApiSlice"
 import { logout } from '../slices/authSlice'
+import Banner from "./Banner"
 
 
 
@@ -27,6 +28,7 @@ const Header = () => {
 
   return (
     <header>
+			<Banner />
 			<nav>
 				<div className="nav-sections">
 					<div className="logo-section">
