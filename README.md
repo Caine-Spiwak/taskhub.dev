@@ -38,6 +38,8 @@ clone the repository
 ```bash
 git clone https://github.com/Caine-Spiwak/taskhub.dev.git
 ```
+Create a .env file and add environment variables using the provided .env-example
+
 install dependencies for front & backend
 ```bash
 npm run build
