@@ -48,7 +48,6 @@ run the server
 ```bash
 npm run dev
 ```
-Go to http://localhost:5555
 
 ## Upcoming Features
 So far only the most fundamental part of app idea is implemented. Here's whats in store...
